@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Register & Login</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    .box { border: 1px solid #ccc; padding: 20px; margin-bottom: 20px; }
+    input { display: block; margin: 10px 0; padding: 8px; width: 100%; }
+    a { cursor: pointer; color: blue; text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <div id="registerBox" class="box">
+    <h2>Register</h2>
+    <input type="text" id="regUsername" placeholder="Username">
+    <input type="password" id="regPassword" placeholder="Password">
+    <button onclick="register()">Register</button>
+    <p>Already have an account? <a onclick="showLogin()">Login here</a></p>
+  </div>
+
+  <div id="loginBox" class="box" style="display: none;">
+    <h2>Login</h2>
+    <input type="text" id="loginUsername" placeholder="Username">
+    <input type="password" id="loginPassword" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <p>Don't have an account? <a onclick="showRegister()">Register here</a></p>
+  </div>
+
+  <p id="message"></p>
+
+  <script>
+    function showLogin() {
+      document.getElementById('registerBox').style.display = 'none';
+      document.getElementById('loginBox').style.display = 'block';
+      document.getElementById('message').innerText = '';
+    }
+
+    function showRegister() {
+     
+      document.getElementById('registerBox').style.display = 'block';
+      document.getElementById('loginBox').style.display = 'none';
+      document.getElementById('message').innerText = '';
+    }
+
+    function register() {
+      const username = document.getElementById('regUsername').value;
+      const password = document.getElementById('regPassword').value;
+
+      if (localStorage.getItem(username)) {
+        document.getElementById('message').innerText = "Username already exists.";
+      } else {
+        localStorage.setItem(username, password);
+        document.getElementById('message').innerText = "Registration successful!";
+        
+        document.getElementById('registerBox').style.display = "none";
+      }
+    }
+
+    function login() {
+      const username = document.getElementById('loginUsername').value;
+      const password = document.getElementById('loginPassword').value;
+
+      const storedPassword = localStorage.getItem(username);
+      if (storedPassword === password) {
+        document.getElementById('message').innerText = "Login successful! Welcome " + username;
+        document.getElementById('loginBox').style.display = "none";
+      } else {
+    document.getElementById('message').innerText = "Invalid username or password.";
+      }
+    }
+  </script>
+
+</body>
+</html>
